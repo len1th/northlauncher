@@ -1,0 +1,65 @@
+{
+  "name": "north-launcher",
+  "version": "0.56.8-north.2",
+  "private": true,
+  "license": "MIT",
+  "description": "North Launcher - Len1th tarafÄ±ndan geliÅŸtirilen modern Minecraft launcher",
+  "author": "Len1th <mberkaslan0@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/len1th/northlauncher"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "compile": "corepack pnpm -r compile",
+    "test": "vitest",
+    "build:schema": "corepack pnpm run --prefix=xmcl-runtime-api build:schema",
+    "build": "corepack pnpm build:renderer && corepack pnpm run --prefix=xmcl-electron-app build",
+    "build:all": "corepack pnpm run --prefix=xmcl-electron-app build:all",
+    "build:renderer": "corepack pnpm --prefix=xmcl-keystone-ui build",
+    "release:github": "node scripts/publish-github-release.js",
+    "build:docs": "tsx scripts/docs.ts",
+    "postsign": "corepack pnpm run --prefix=xmcl-electron-app postsign",
+    "check": "corepack pnpm run --prefix=xmcl-runtime-api check && corepack pnpm run --prefix=xmcl-runtime check && corepack pnpm run --prefix=xmcl-electron-app check && corepack pnpm run --prefix=xmcl-keystone-ui check",
+    "dev:main": "corepack pnpm run --prefix=xmcl-electron-app dev",
+    "dev:renderer": "corepack pnpm run --prefix=xmcl-keystone-ui dev",
+    "lint": "oxlint -c ./.oxlintrc.json packages && corepack pnpm run --prefix=xmcl-keystone-ui lint && corepack pnpm run --prefix=xmcl-runtime lint && corepack pnpm run --prefix=xmcl-runtime-api lint && corepack pnpm run --prefix=xmcl-electron-app lint",
+    "lint:fix": "oxlint -c ./.oxlintrc.json packages --fix && corepack pnpm run --prefix=xmcl-runtime-api lint:fix && corepack pnpm run --prefix=xmcl-runtime lint:fix && corepack pnpm run --prefix=xmcl-electron-app lint:fix && corepack pnpm run --prefix=xmcl-keystone-ui lint:fix",
+    "format": "oxfmt -c ./.oxfmtrc.json packages --write",
+    "coverage": "vitest run --coverage",
+    "test:e2e": "corepack pnpm --prefix=e2e test",
+    "test:e2e:smoke": "corepack pnpm --prefix=e2e test:smoke",
+    "test:e2e:ui": "corepack pnpm --prefix=e2e test:ui",
+    "test:e2e:scratch": "corepack pnpm --prefix=e2e test:scratch",
+    "e2e:install": "corepack pnpm --dir=e2e install --ignore-workspace",
+    "build:tutorial": "corepack pnpm --prefix=e2e tutorial",
+    "gen:testids": "tsx scripts/gen-testids.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
+    "tsx": "^4.21.0",
+    "typedoc": "^0.28.15",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cpu-features",
+      "electron",
+      "esbuild",
+      "node-datachannel",
+      "ssh2",
+      "vue-demi"
+    ],
+    "overrides": {
+      "postcss": ">=8.5.10",
+      "rolldown": "1.0.1"
+    }
+  }
+}
